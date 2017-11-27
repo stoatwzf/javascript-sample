@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>backbone collection</title>
+	<script src="../node_modules/underscore/underscore-min.js"></script>
+	<script src="../node_modules/backbone/backbone-min.js"></script>
+</head>
+<body>
+	<script>
+		var Fruit = Backbone.Model.extend(),
+			Fruits = Backbone.Collection.extend({
+				model: Fruit,
+				initialize: function (){
+					this.on('add', function (){
+						console.log('New fruit added.');
+					});
+					this.on('remove', function (){
+						console.log('Fruit removed.');
+					});
+				}
+			}),
+			fruitbowl = new Fruits({
+				type: 'apple',
+				color: 'red'
+			});
+
+		fruitbowl.add({
+			type: 'banana',
+			color: 'yellow'
+		});
+		console.log(fruitbowl.models[1]);
+	</script>
+</body>
+</html>

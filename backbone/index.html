@@ -3,8 +3,42 @@
 <head>
 	<meta charset="UTF-8">
 	<title>backbone</title>
+	<script src="../node_modules/underscore/underscore-min.js"></script>
+	<script src="../node_modules/backbone/backbone-min.js"></script>
 </head>
 <body>
-	
+	<script>
+		var Fruit = Backbone.Model.extend({
+			description: function (){
+				return this.get('type') + ';' + this.get('color');
+			},
+			defaults: {
+				condition: 'perfect'
+			},
+			initialize: function (){
+				console.log('Fruit model initialized.');
+				this.on('add', function (){
+					console.log('Fruit added - ' + this.get('type'));
+				});
+				this.on('change', function (){
+					console.log('Values for this model have changed.');
+				});
+			},
+			validate: function (options){
+				if (options.quantity && !_isNumber(options.quantity)){
+					return 'Quantity must be a number';
+				}
+			}
+		}),
+			apple = new Fruit({
+				type: 'apple',
+				color: 'red'
+			});
+
+	apple.on('error', function (model, error){
+		console.log(error);
+	});
+	apple.set('quantity', 'a bunch');
+	</script>
 </body>
 </html>
