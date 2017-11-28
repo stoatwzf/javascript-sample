@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>sync data</title>
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="../node_modules/underscore/underscore-min.js"></script>
+	<script src="../node_modules/backbone/backbone-min.js"></script>
+	<script src="../node_modules/backbone-localstorage/backbone-localstorage.js"></script>
+</head>
+<body>
+	<script>
+		var User = Backbone.Model.extend({
+			initialize: function (){
+				this.on('add', this.addHandler);
+				this.on('change', this.changeHandler);
+				this.on('remove', this.removeHandler);
+			},
+			addHandler: function (){
+				this.save();
+			},
+			changeHandler: function (){
+				this.save(this.changed);
+			},
+			removeHandler: function (){
+				this.destroy();
+			}
+		}),
+			Users = Backbone.Collection.extend({
+				model: User,
+				localStorage: new Backbone.LocalStorage('users')
+			}),
+			users = new Users;
+
+		users.fetch();
+		console.log(users.toJSON());
+		users.add({username: 'user1'});
+		users.add({username: 'user2'});
+		users.first().set('username', 'newUserName');
+		users.remove(users.first());
+	</script>
+</body>
+</html>

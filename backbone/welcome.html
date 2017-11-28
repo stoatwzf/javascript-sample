@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Welcome</title>
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="../node_modules/underscore/underscore-min.js"></script>
+	<script src="../node_modules/backbone/backbone-min.js"></script>
+</head>
+<body>
+	<header>
+		<div class="welcome-message">Welcome</div>
+	</header>
+	<script>
+		var User = Backbone.Model.extend({}),
+			user = new User({
+				displayName: 'stoat'
+			}),
+			WelcomeMessageView = Backbone.View.extend({
+				el: 'header .welcome-message',
+				initialize: function (){
+					this.model.on('change:displayName', this.render, this);
+					this.render();
+				},
+				render: function (){
+					var displayName = this.model.get('displayName');
+
+					this.$el.html('Welcome ' + displayName);
+					return this;
+				}
+			}),
+			welcomeMessageView = new WelcomeMessageView({
+				model: user
+			});
+
+		user.set('displayName', 'wzf');
+	</script>
+</body>
+</html>

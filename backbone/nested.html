@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>backbone view nest</title>
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="../node_modules/underscore/underscore-min.js"></script>
+	<script src="../node_modules/backbone/backbone-min.js"></script>
+</head>
+<body>
+	<ul id="band-wrapper"></ul>
+	<script>
+		var Band = {};
+
+		Band.Member = Backbone.Model.extend({});
+		Band.Members = Backbone.Collection.extend({
+			model: Band.Member
+		});
+
+		var band = new Band.Members([{
+			name: 'stoat1'
+		}, {
+			name: 'stoat2'
+		}, {
+			name: 'stoat3'
+		}]);
+
+		Band.Member.View = Backbone.View.extend({
+			tagName: 'li',
+			render: function (){
+				this.$el.text(this.model.get('name'));
+				this.parentView.$el.append(this.$el);
+				return this;
+			}
+		});
+		Band.Members.View = Backbone.View.extend({
+			el: '#band-wrapper',
+			initialize: function (){
+				_.bindAll(this, 'render');
+				this.collection.on('change', this.render);
+				this.collection.on('add', this.render);
+				this.collection.on('remove', this.render);
+				this.render();
+			},
+			render: function (){
+				var thisView = this;
+
+				this.$el.empty();
+				this.collection.each(function (bandMember){
+					var bandMemberView = new Band.Member.View({
+						model: bandMember
+					});
+
+					bandMemberView.parentView = thisView;
+					bandMemberView.render();
+				});
+				return this;
+			}
+		});
+
+		var bandView = new Band.Members.View({
+			collection: band
+		});
+	</script>
+</body>
+</html>

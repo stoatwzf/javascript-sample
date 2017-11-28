@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>sync data</title>
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="../node_modules/underscore/underscore-min.js"></script>
+	<script src="../node_modules/backbone/backbone-min.js"></script>
+	<script src="../node_modules/backbone-localstorage/backbone-localstorage.min.js"></script>
+</head>
+<body>
+	<script>
+		var User = Backbone.Model.extend({
+			// url: 'http://10.10.0.243:8181',
+			localStorage: new Backbone.LocalStorage('user-store')
+		});
+		var user = new User({
+			displayName: 'stoat',
+			userName: 'wzf',
+			bio: 'Some nerd'
+		});
+
+		Backbone.emulateHTTP = true;
+		Backbone.emulateJSON = true;
+		user.save({}, {
+			success: function (){},
+			error: function (){}
+		});
+
+		/*var user = new User;
+
+		user.fetch({
+			success: function (){},
+			error: function (){}
+		});*/
+
+		var Fruit = Backbone.Model.extend({}),
+			Fruits = Backbone.Collection.extend({
+				model: Fruit,
+				url: 'http://10.10.0.243:8181'
+			}),
+			fruits = new Fruits;
+
+		fruits.fetch();
+	</script>
+</body>
+</html>

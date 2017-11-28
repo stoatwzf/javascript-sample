@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>backbone view</title>
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="../node_modules/underscore/underscore-min.js"></script>
+	<script src="../node_modules/backbone/backbone-min.js"></script>
+</head>
+<body>
+	<div id="user-card"></div>
+	<script>
+		var User = Backbone.Model.extend({}),
+			user = new User({
+				username: 'stoat',
+				displayName: 'wzf',
+				bio: 'some nerd'
+			}),
+			UserView = Backbone.View.extend({
+				el: '#user-card',
+				initialize: function (){
+					this.render();
+				},
+				render: function (){
+					var $card = $('<a href="/users/' + this.model.get('username') + '">'),
+						$name = $('<h1>' + this.model.get('displayName') + '</h1>').appendTo($card),
+						$bio = $('<p>' + this.model.get('bio') + '</p>').appendTo($card);
+
+					this.$el.html($card);
+					return this;
+				}
+			}),
+			userView = new UserView({
+				model: user
+			});
+
+		console.log(userView.el);
+	</script>
+</body>
+</html>
