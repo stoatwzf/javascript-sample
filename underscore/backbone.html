@@ -2,19 +2,71 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>The backbone use template</title>
+	<title>Backbone template</title>
 	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
 	<script src="../node_modules/underscore/underscore-min.js"></script>
 	<script src="../node_modules/backbone/backbone-min.js"></script>
+	<script src="../node_modules/backbone-localstorage/backbone-localstorage.min.js"></script>
 </head>
 <body>
+	<div id="user-card"></div>
+	<script id="user-template" type="text/template">
+		<a href="/user/<%= username %>">
+			<h1><%= displayName %></h1>
+			<p><%= bio %></p>
+		</a>
+	</script>
 	<script>
 		var User = Backbone.Model.extend({}),
-			user = new User({
-				username: 'stoat',
-				displayName: 'wzf',
-				bio: 'Some nerd'
+			UserRouter = Backbone.Router.extend({
+				routes: {
+					settings: 'settings',
+					help: 'help'
+				},
+				settings: function (){},
+				help: function (){}
+			}),
+			Users = Backbone.Collection.extend({
+				model: User
+				// localStorage: new Backbone.LocalStorage('users')
+			}),
+			users = new Users([{
+				username: 'stoat1',
+				displayName: 'wzf1',
+				bio: 'some nerd1'
+			}, {
+				username: 'stoat2',
+				displayName: 'wzf2',
+				bio: 'some nerd2'
+			}, {
+				username: 'stoat3',
+				displayName: 'wzf3',
+				bio: 'some nerd3'
+			}]),
+			UserView = Backbone.View.extend({
+				el: '#user-card',
+				template: _.template($('#user-template').text()),
+				initialize: function (){
+					this.collection.on('change', this.render, this);
+					this.render();
+				},
+				render: function (){
+					var thisView = this;
+
+					this.collection.each(function (mo){
+						var $card = thisView.template(mo.toJSON());
+
+						thisView.$el.append($card);
+					});
+					return this;
+				}
+			}),
+			userView = new UserView({
+				collection: users
 			});
+
+		// users.svae();
+		// users.fetch();
 	</script>
 </body>
 </html>
