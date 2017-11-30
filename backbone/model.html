@@ -25,7 +25,7 @@
 				});
 			},
 			validate: function (options){
-				if (options.quantity && !_isNumber(options.quantity)){
+				if (options.quantity && !_.isNumber(options.quantity)){
 					return 'Quantity must be a number';
 				}
 			}

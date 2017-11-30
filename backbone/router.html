@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Backbone Router</title>
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="../node_modules/underscore/underscore-min.js"></script>
+	<script src="../node_modules/backbone/backbone-min.js"></script>
+	<script src="../node_modules/modernizr/src/Modernizr.js"></script>
+</head>
+<body>
+	<a href="#settings">Settings</a>
+	<a href="#help">Help</a>
+	<script>
+		var removeHandler = function (){
+			console.log('rmeove handler');
+		};
+		var Workspace = Backbone.Router.extend({
+			routes: {
+				'settings': 'settings',
+				'help': 'help',
+				'search/:query': 'search',
+				'search/:query/p:page': 'search'
+
+			},
+			settings: function (){
+				console.log('Settings init');
+			},
+			help: function (){
+				console.log('Help init');
+			},
+			search: function (query, page){
+				console.log(query + page);
+			},
+			initialize: function (){
+				_.bind(this.render, this);
+				this.on('rmeove', removeHandler);
+				this.on('all', this.allHandler);
+			},
+			allHandler: function (eventType){
+				switch (eventType){
+					case 'add':
+						console.log('add');
+						break;
+					case 'remove':
+						console.log('remove');
+						break;
+					case 'change':
+						console.log('change');
+						break;
+				}
+			}
+		});
+
+		Workspace.trigger('remove');
+		Workspace.off('remove', removeHandler);
+		Backbone.history.start({
+			pushState: true, // Modernizr.history
+			root: '/path/to/my-app'
+		});
+	</script>
+</body>
+</html>

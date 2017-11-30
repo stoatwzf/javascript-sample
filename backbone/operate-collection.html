@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Backbone operate collectoon</title>
+	<script src="../node_modules/underscore/underscore-min.js"></script>
+	<script src="../node_modules/backbone/backbone-min.js"></script>
+</head>
+<body>
+	<script>
+		var Fruit = Backbone.Model.extend(),
+			Fruits = Backbone.Collection.extend({
+				model: Fruit
+			}),
+			fruitbowl = new Fruits;
+
+		fruitbowl.add({
+			type: 'apple',
+			color: 'red',
+			quantity: 3
+		});
+		fruitbowl.add({
+			type: 'apple',
+			color: 'yellow',
+			quantity: 5
+		});
+		fruitbowl.add({
+			type: 'banana',
+			color: 'yellow',
+			quantity: 1
+		});
+		fruitbowl.add({
+			type: 'orange',
+			color: 'orange',
+			quantity: 3
+		});
+
+		var thirdFruit = fruitbowl.at(2),
+			firstFruit = fruitbowl.first(),
+			lastFruit = fruitbowl.last(),
+			apples = fruitbowl.where({
+				type: 'apple'
+			});
+
+		fruitbowl.comparator = function (fruit){
+			return fruit.get('quantity');
+		}
+		fruitbowl.comparator = function (fruit1, fruit2){
+			var fruitName1 = fruit1.get('type'),
+				fruitName2 = fruit2.get('type');
+
+			if (fruitName1 < fruitName2){
+				return 1;
+			}
+			if (fruitName1 > fruitName2){
+				return -1;
+			}
+			return 0;
+		}
+		fruitbowl.sort();
+	</script>
+</body>
+</html>

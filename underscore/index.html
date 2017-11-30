@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>underscore</title>
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="../node_modules/underscore/underscore-min.js"></script>
+</head>
+<body>
+	<script type="text/template" src="file:///Users/stoat/Documents/javascript-sample/underscore/public/template.js" id="my-template"></script>
+	<script>
+		$.ajax({
+			url: $('#my-template').attr('src'),
+			success: function (data){
+				var myTemplate = _.template(data),
+					compiled = myTemplate({
+						title: 'Javascript Template',
+						subtitle: 'Are pretty awesome',
+						description: 'They take the markup out of your Javascript.'
+					});
+
+				$('body').append(compiled);
+			},
+			error: function (err){
+				console.log(err);
+			}
+		});
+		
+	</script>
+</body>
+</html>
