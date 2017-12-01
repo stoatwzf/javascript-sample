@@ -1,18 +1,24 @@
 module.exports = function (grunt){
-	// config task
+	require("matchdep").filterDev("grunt-*").forEach(grunt.loadNpmTasks);
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		compassto: {
-			foo: {
-				src: ['./form/public/sass/index.scss'],
-				dest: './form/public/css/index.css'
+		sass: {
+			files: {
+				expand: true,
+				cwd: '<%= csPath %>/scss/',
+				src: '*.scss',
+				dest: '<%= csPath %>/css/',
+				ext: '.css'
 			}
-		}
+		},
+		watch: {
+			css: {
+				files: '<%= csPath %>/scss/*.scss',
+				tasks: 'sass'
+			}
+		},
+		csPath: 'form/public/stylesheets/'
 	});
 
-	// load package
-	grunt.loadNpmTasks('grunt-contrib-compass');
-
-	// register task
-	grunt.registerTask('default', ['compassto']);
+	grunt.registerTask('default', ['watch']);
 };
