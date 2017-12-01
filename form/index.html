@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>H5 form</title>
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="../node_modules/html5shiv/dist/html5shiv.min.js"></script>
+	<link rel="stylesheet" href="public/css/index.css">
+</head>
+<body>
+	<input type="range" min="0" max="100" step="5" value="30">
+	<span class="range-value"></span><br>
+	<input type="date"><br>
+	<input type="color"><br>
+	<input type="tel"><br>
+	<input type="number" placeholder="152-24038495">
+	<script>
+		$.fn.displaySliderVal = function (){
+			$(this).siblings('.range-value').text($(this).val());
+			return this;
+		}
+		$('input[type=range]').change(function (){
+			$(this).displaySliderVal();
+		}).displaySliderVal();
+	</script>
+</body>
+</html>
