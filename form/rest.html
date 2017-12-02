@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>REST API</title>
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="../node_modules/html5shiv/dist/html5shiv.min.js"></script>
+	<script src="https://cdn.bootcss.com/modernizr/2010.07.06dev/modernizr.min.js"></script>
+</head>
+<body>
+	<form action="http://10.10.0.243:8181" method="post">
+		<fieldset>
+			<label for="name">Name:</label>
+			<input type="text" name="name" id="name">
+		</fieldset>
+		<fieldset>
+			<label for="email">Email:</label>
+			<input type="email" name="email" id="email">
+		</fieldset>
+		<fieldset>
+			<label for="password">Password:</label>
+			<input type="password" name="password" id="password">
+		</fieldset>
+		<fieldset>
+			<input type="submit">
+		</fieldset>
+	</form>
+	<script>
+		$('form').submit(function (e){
+			e.preventDefault();
+			var $form = $(this),
+				postMethod = $form.attr('method') || 'get',
+				postUrl = $form.attr('action');
+
+			$.ajax({
+				url: postUrl,
+				type: postMethod,
+				data: $form.serialize(),
+				success: function (data){
+					console.log(data);
+				},
+				error: function (err){
+					console.log('Error submitting form - ' + e.status + ': ' + e.statusText);
+				}
+			});
+		});
+	</script>
+</body>
+</html>

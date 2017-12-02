@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>polyfill</title>
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="../node_modules/html5shiv/dist/html5shiv.min.js"></script>
+	<script src="https://cdn.bootcss.com/modernizr/2010.07.06dev/modernizr.min.js"></script>
+</head>
+<body>
+	<input type="text" placeholder="some text">
+	<script>
+		var jsPlaceholder = function (){
+			$('[placeholder]').focus(function (){
+				var $input = $(this);
+
+				if ($input.val() === $input.attr('placeholder')){
+					$input.val('');
+					if ($input.hasClass('placeholder')){
+						$input.removeClass('placeholder');
+					}
+				}
+			}).blur(function (){
+				var $input = $(this);
+
+				if ($input.val() === '' || $input.val() === $input.attr('placeholder')){
+					if ($input.attr('type') === 'password'){
+						var $newInput = $input.clone();
+
+						$newInput.attr('type', 'text'),
+						$newInput.val($input.attr('placeholder'));
+						$newInput.addClass('placeholder clone');
+						$newInput.insertAfter($input);
+						$input.hide();
+						$newInput.focus(function (){
+							$(this).remove();
+							$input.show().focus();
+						});
+					} else {
+						$input.val($input.attr('placeholder'));
+						$input.addClass('placeholder');
+					}
+				}
+			}).trigger('blur');
+		};
+
+		$('form').submit(function (){
+			$(this).find('[placeholder]').each(function (){
+				var $input = $(this);
+
+				if ($input.hasClass('clone')){
+					$input.remove();
+					return;
+				}
+				if ($input.val() === $input.attr('placeholder')){
+					$input.val();
+				}
+			});
+		});
+		if (!Modernizr.input.placeholder){
+			jsPlaceholder();
+		}
+	</script>
+</body>
+</html>

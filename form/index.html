@@ -3,9 +3,10 @@
 <head>
 	<meta charset="UTF-8">
 	<title>H5 form</title>
+	<link rel="stylesheet" href="public/stylesheets/css/index.css">
 	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
 	<script src="../node_modules/html5shiv/dist/html5shiv.min.js"></script>
-	<link rel="stylesheet" href="public/stylesheets/css/index.css">
+	<script src="https://cdn.bootcss.com/modernizr/2010.07.06dev/modernizr.min.js"></script>
 </head>
 <body>
 	<input type="range" min="0" max="100" step="5" value="30">
@@ -13,7 +14,8 @@
 	<input type="date"><br>
 	<input type="color"><br>
 	<input type="tel"><br>
-	<input type="number" placeholder="152-24038495">
+	<input type="number" placeholder="152-24038495"><br>
+	<input type="text" autofocus pattern="[a-zA-Z]+" oninvalid="setCustomValidity('You may only enter letters.')">
 	<script>
 		$.fn.displaySliderVal = function (){
 			$(this).siblings('.range-value').text($(this).val());
@@ -22,6 +24,10 @@
 		$('input[type=range]').change(function (){
 			$(this).displaySliderVal();
 		}).displaySliderVal();
+
+		if (!Modernizr.input.autofocus){
+			$('[autofocus').filter(':last').focus();
+		}
 	</script>
 </body>
 </html>

@@ -1,4 +1,10 @@
 body {
-  background: rgba(0, 222, 222, 0.2); }
+  background: rgba(0, 222, 222, 0.1); }
+  body input::-webkit-input-placeholder {
+    color: red; }
+  body input::-moz-placeholder {
+    color: red; }
+  body input:-ms-placeholder {
+    color: red; }
 
 /*# sourceMappingURL=index.css.map */

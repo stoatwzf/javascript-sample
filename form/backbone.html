@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>backbone form</title>
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="../node_modules/html5shiv/dist/html5shiv.min.js"></script>
+	<script src="../node_modules/underscore/underscore-min.js"></script>
+	<script src="../node_modules/backbone/backbone-min.js"></script>
+</head>
+<body>
+	<div id="signup-form-wrapper"></div>
+	<script id="form-template" type="text/template">
+		<form action="http://10.10.0.243:8181" method="post">
+			<fieldset>
+				<label for="name">Name:</label>
+				<input type="text" name="name" id="name" value="<%= name %>">
+			</fieldset>
+			<fieldset>
+				<label for="email">Email:</label>
+				<input type="emial" id="email" name="email" value="<%= emial %>">
+			</fieldset>
+			<fieldset>
+				<label for="password">Password:</label>
+				<input type="password" id="password" name="password" value="<%= password %>">
+			</fieldset>
+			<fieldset>
+				<label for="passwordConf">PasswordConf</label>
+				<input type="password" id="passwordConf" name="passwordConf" value="<%= passwordConf %>">
+			</fieldset>
+			<fieldset>
+				<input type="submit">
+			</fieldset>
+		</form>
+	</script>
+	<script>
+		var User = Backbone.Model.extend({
+				defaults: {
+					name: 'stoat',
+					emial: 'stoatwzf@gamil.com',
+					password: '123456',
+					passwordConf: '12346'
+				}
+			}),
+			user = new User,
+			SignupView = Backbone.View.extend({
+				el: '#signup-form-wrapper',
+				template: _.template($('#form-template').text()),
+				events: {
+					'change input': 'inputChange'
+				},
+				initialize: function (){
+					_.bindAll(this, 'inputChange');
+					this.render();
+				},
+				render: function (){
+					var modelData = this.model.toJSON();
+
+					this.$el.html(this.template(modelData));
+				},
+				inputChange: function (e){
+					var $input = $(e.target),
+						inputName = $input.attr('name');
+
+					this.model.set(inputName, $input.val());
+				}
+			}),
+			signupView = new SignupView({
+				model: user
+			});
+	</script>
+</body>
+</html>
