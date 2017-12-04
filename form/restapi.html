@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>sample</title>
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="../node_modules/underscore/underscore-min.js"></script>
+	<script src="../node_modules/backbone/backbone-min.js"></script>
+	<script src="https://cdn.bootcss.com/backbone-localstorage.js/1.1.16/backbone.localStorage-min.js"></script>
+</head>
+<body>
+	<script>
+		var User = Backbone.Model.extend({
+				localStorage: new Backbone.LocalStorage('localUser')
+			}),
+			user = new User,
+			Router = Backbone.Router.extend({
+				routes: {
+					setting: 'setting',
+					help: 'help'
+				},
+				setting: function (){
+					console.log('setting');
+				},
+				help: function (){
+					console.log('help');
+				}
+			}),
+			router = new Router;
+
+		user.fetch({
+			success: function (){
+				console.log(user.toJSON()[0].name);
+			}
+		});
+	</script>
+</body>
+</html>

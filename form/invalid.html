@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>backbone form validator</title>
+	<link rel="stylesheet" href="public/stylesheets/css/index.css">
+	<script src="../node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="../node_modules/html5shiv/dist/html5shiv.min.js"></script>
+	<script src="../node_modules/underscore/underscore-min.js"></script>
+	<script src="../node_modules/backbone/backbone-min.js"></script>
+	<script src="https://cdn.bootcss.com/modernizr/2010.07.06dev/modernizr.min.js"></script>
+</head>
+<body>
+	<div id="signup-form-wrapper"></div>
+	<script type="text/template" id="signup-template">
+		<%
+		var displayField = function (fieldKey, fieldValue, displayName, inputType){
+			if (typeof inputType === 'undefined'){
+				inputType = 'text'
+			}
+		%>
+			<fieldset>
+				<label for="<%= fieldKey %>"><%= displayName %></label>
+				<input type="<%= inputType %>" name="<%= fieldKey %>" id="<%= fieldKey %>" value="<%= fieldValue %>" <%= invalid[fieldKey] ? 'class="error"' : "" %>>
+				<% if (invalid[fieldKey]){ %>
+					<span class="error-message"><%= invalid[fieldKey] %></span>
+				<% } %>
+			</fieldset>
+		<%
+		}
+		%>
+		<form action="url" method="post">
+			<% displayField('name', name, 'Name'); %>
+			<% displayField('email', email, 'Email', 'email'); %>
+			<% displayField('username', username, 'Username'); %>
+			<% displayField('password', password, 'Password', 'password'); %>
+			<% displayField('passwordConf', passwordConf, 'Confirm Password', 'password'); %>
+			<fieldset>
+				<input type="submit">
+			</fieldset>
+		</form>
+	</script>
+	<script>
+		var Invalid = Backbone.Model.extend({}),
+			User = Backbone.Model.extend({
+				defaults: {
+					name: 'wzf',
+					email: 'staotwzf@gmail.com',
+					username: 'stoat',
+					password: '123456',
+					passwordConf: '123456'
+				},
+				initialize: function (){
+					this.set('invalid', new Invalid);
+				}
+			}),
+			user = new User,
+			SignupView = Backbone.View.extend({
+				el: '#signup-form-wrapper',
+				template: _.template($('#signup-template').text()),
+				events: {
+					'change input': 'inputChange',
+					'submit form': 'saveform'
+				},
+				initialize: function (){
+					this.render();
+				},
+				render: function (){
+					var modelData = this.model.toJSON();
+
+					modelData.invalid = modelData.invalid.toJSON();
+					this.$el.html(this.template(modelData));
+				},
+				validateForm: function (checkRequired){
+					var data = this.model.toJSON();
+
+					data.invalid = data.invalid.toJSON();
+					var requiredMsg = 'Required field',
+						emailRegex = /[a-z0-9]/;
+
+					if (data.email.length && !data.email.match(emailRegex)){
+						this.model.get('invalid').set('email', 'Must provide a valid email');
+					} else {
+						if (data.invalid.email !== requiredMsg){
+							this.model.get('invalid').unset('email');
+						}
+					}
+					if (data.password.length && data.passwordConf.length && data.password !== data.passwordConf){
+						this.model.get('invalid').set('password', 'Passwords do not match');
+						this.model.get('invalid').set('passwordConf', 'Passwords do not match');
+					} else {
+						if (data.invalid.password !== requiredMsg){
+							this.model.get('invalid').unset('password');
+						}
+						if (data.invalid.passwordConf !== requiredMsg){
+							this.model.get('invalid').unset('passwordConf');
+						}
+					}
+					if (checkRequired){
+						_.each(data, function (value, key){
+							if (key === 'invalid'){
+								return false;
+							}
+							if (!value.length){
+								this.model.get('invalid').set(key, requiredMsg);
+							} else {
+								if (data.invalid[key] === requiredMsg){
+									this.model.get('invalid').unset(key);
+								}
+							}
+						}, this);
+					}
+					if (_.size(this.model.get('invalid').toJSON())){
+						return false;
+					} else {
+						return true;
+					}
+				},
+				inputChange: function (e){
+					var $input = $(e.target),
+						inputName = $input.attr('name');
+
+					this.model.set(inputName, $input.val());
+					if (!this.validateForm(false)){
+						this.render();
+					}
+				},
+				saveform: function (e){
+					e.preventDefault();
+					console.log(e);
+					if (this.validateForm(true)){
+						this.model.url = this.$el.find('form').attr('action');
+						var data = this.model.toJSON();
+
+						delete data.invalid;
+						delete data.passwordConf;
+						this.model.save(data);
+					} else {
+						this.render();
+					}
+				}
+			}),
+			signupView = new SignupView({
+				model: user
+			});
+	</script>
+</body>
+</html>
