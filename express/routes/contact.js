@@ -25,8 +25,8 @@ router.post('/', function (req, res, next){
 	} else {
 		var emailjs = require('emailjs'),
 			server = emailjs.server.connect({
-				user: 'stoatwzf@gmail.com',
-				password: 'Sncj.12580',
+				user: 'a@gmail.com',
+				password: 'b',
 				host: 'smtp.gmail.com',
 				ssl: true
 			}),
@@ -35,8 +35,8 @@ router.post('/', function (req, res, next){
 		emailBody += 'Message: ' + req.body.message + '\n\n';
 		emailBody += 'Sent automatically from Node server on ' + Date();
 		server.send({
-			from: 'stoat@163.com',
-			to: 'stoatwzf@gmail.com',
+			from: 'a@163.com',
+			to: 'a@gmail.com',
 			subject: 'Contact form submission',
 			text: emailBody
 		}, function (err, message){
