@@ -1,0 +1,20 @@
+.form-item {
+  padding: 5px 0; }
+  .form-item label {
+    display: inline-block;
+    width: 90px;
+    padding-right: 10px;
+    text-align: right;
+    vertical-align: top; }
+  .form-item input[type=text], .form-item input[type=email] {
+    width: 250px;
+    padding: 5px; }
+  .form-item textarea {
+    width: 400px;
+    height: 150px;
+    padding: 5px; }
+  .form-item input[type=submit] {
+    margin-left: 100px;
+    font-size: 36px; }
+
+/*# sourceMappingURL=contact.css.map */

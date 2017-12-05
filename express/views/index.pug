@@ -1,0 +1,9 @@
+extends layout
+
+block javascripts
+	script(src="/template/dest/nav.js")
+	script(src="/template/dest/tab.js")
+	script(src="/javascripts/dest/index.min.js")
+block content
+	h1=title
+	p Welcome to #{title}

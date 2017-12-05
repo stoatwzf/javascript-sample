@@ -1,0 +1,3 @@
+this["JST"] = this["JST"] || {};
+
+this["JST"]["public/template/src/nav"] = function template(locals) {var pug_html = "", pug_mixins = {}, pug_interp;;var locals_for_with = (locals || {});(function (name) {pug_html = pug_html + "\u003Cnav\u003E\u003Cul\u003E\u003Cli\u003Elist\u003C\u002Fli\u003E\u003Cli\u003Elist\u003C\u002Fli\u003E\u003Cli\u003Elist\u003C\u002Fli\u003E\u003Cli\u003Elist\u003C\u002Fli\u003E\u003Cli\u003E" + (null == (pug_interp = name) ? "" : pug_interp) + "\u003C\u002Fli\u003E\u003C\u002Ful\u003E\u003C\u002Fnav\u003E";}.call(this,"name" in locals_for_with?locals_for_with.name:typeof name!=="undefined"?name:undefined));;return pug_html;};

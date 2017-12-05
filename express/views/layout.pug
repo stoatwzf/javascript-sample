@@ -1,0 +1,17 @@
+doctype html
+html
+head
+	link(rel="stylesheet" href="/stylesheets/dest/index.css")
+	block stylesheets
+	script(src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js")
+	block javascripts
+body
+	nav
+		ul
+			li
+				a(href="/") Home
+			li
+				a(href="/about") About
+			li
+				a(href="/contact") Contact
+	block content

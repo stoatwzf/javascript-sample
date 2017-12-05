@@ -1,0 +1,20 @@
+extends layout
+
+block stylesheets
+	link(rel="stylesheet", href="/stylesheets/dest/contact.css")
+block content
+	h1=title
+	if submess
+		p=submess.response
+	form(method="post")
+		.form-item
+			label(for="name") Name:
+			input(type="text" name="name" id="name")
+		.form-item
+			label(for="email") Email:
+			input(type="email" name="email" id="email")
+		.form-item
+			label(for="message") Message:
+			input(type="text" name="message" id="message")
+		.form-item
+			input(type="submit" value="Send")
