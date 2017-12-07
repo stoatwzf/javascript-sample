@@ -3,3 +3,4 @@ node_modules
 express/node_modules
 express/.sass-cache
 mongdb/data
+mongoose/data
