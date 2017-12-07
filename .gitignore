@@ -2,3 +2,4 @@ node_modules
 .sass-cache
 express/node_modules
 express/.sass-cache
+mongodb/data
