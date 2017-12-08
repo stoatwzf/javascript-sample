@@ -1,0 +1,17 @@
+extends layout
+
+block stylesheets
+	link(rel="stylesheet", href="/stylesheets/dest/chat.css")
+block javascripts
+	script(src="/javascripts/dest/socket.io.js")
+	script(src="/templates/dest/username.js")
+	script(src="/javascripts/src/chat.js")
+block content
+	h1= title
+	#chatroom
+	form.chatbox(action="", method="post")
+		input(type="text" name="message")
+		input(type="submit" value="send")
+	p.connected
+		| Connected users：
+		span#client-count 0

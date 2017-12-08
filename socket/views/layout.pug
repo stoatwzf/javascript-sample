@@ -1,0 +1,12 @@
+doctype html
+html
+	head
+		title=title
+		link(rel="stylesheet", href="/stylesheets/dest/style.css")
+		block stylesheets
+		script(src="/javascripts/dest/jquery.min.js")
+		script(src="/javascripts/dest/underscore-min.js")
+		script(src="/javascripts/dest/backbone-min.js")
+		block javascripts
+	body
+		block content
