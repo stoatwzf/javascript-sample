@@ -1,6 +1,5 @@
 node_modules
 .sass-cache
-express/node_modules
-express/.sass-cache
-mongdb/data
-mongoose/data
+*/node_modules
+*/.sass-cache
+*/data
