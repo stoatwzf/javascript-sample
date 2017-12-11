@@ -1,0 +1,17 @@
+doctype html
+html
+  head
+    title= title
+    meta(name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0")
+    meta(name="apple-mobile-web-app-capable" content="yes")
+    meta(name="apple-mobile-web-app-status-bar-style" content="black-translucent")
+    meta(name="msapplication-tap-highlight" content="no")
+    link(rel='stylesheet', href='/stylesheets/dest/style.css')
+    block stylesheets
+    script(src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js")
+    script(src="/javascripts/dest/viewporter.js")
+    script(src="https://cdn.bootcss.com/ismobilejs/0.4.1/isMobile.min.js")
+    script(src="http://10.10.0.243:8080/target/target-script-min.js#anonymous")
+    block javascripts
+  body
+    block content

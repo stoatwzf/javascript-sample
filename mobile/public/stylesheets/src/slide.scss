@@ -1,0 +1,21 @@
+.slideshow {
+	width: 500px;
+	height: 300px;
+	position: relative;
+	overflow: hidden;
+	.slides {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 10000px;
+		-webkit-transition: left 0.3s ease;
+		-moz-transition: left 0.3s ease;
+		-o-transition: left 0.3s ease;
+		transition: left 0.3s ease;
+		.slide {
+			width: 500px;
+			height: 300px;
+			float: left;
+		}
+	}
+}
