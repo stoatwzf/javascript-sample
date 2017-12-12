@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>canvas</title>
+</head>
+<body>
+	<canvas id="my-canvas" width="200" height="150"></canvas>
+	<script>
+		window.onload = function (){
+			var canvas = document.getElementById('my-canvas');
+
+			if (canvas.getContext){
+				var ctx = canvas.getContext('2d');
+				var posX = 0;
+				var drawInterval = setInterval(function (){
+					posX += 1;
+					if (posX > 150){
+						clearInterval(drawInterval);
+						return;
+					}
+					ctx.clearRect(0, 0, 200, 150);
+					ctx.fillRect(posX, 10, 50, 50);
+				}, 1000 / 60);
+			}
+		}
+	</script>
+</body>
+</html>

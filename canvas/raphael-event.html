@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>raphael event</title>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/raphael/2.2.7/raphael.min.js"></script>
+</head>
+<body>
+	<div id="svg"></div>
+	<script>
+		$(function (){
+			var paper = Raphael($('#svg')[0], 800, 600);
+			var triangle = paper.path('M300,100 L150,300 L450,300 Z');
+
+			triangle.attr('fill', 'white');
+			$(triangle.node).on('mouseover', function (){
+				triangle.attr('fill', 'red');
+			}).on('mouseout', function (){
+				triangle.attr('fill', 'white');
+			});
+		});
+	</script>
+</body>
+</html>

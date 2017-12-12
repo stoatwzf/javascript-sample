@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>raphael</title>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://cdn.bootcss.com/raphael/2.2.7/raphael.min.js"></script>
+</head>
+<body>
+	<div id="my-svg"></div>
+	<script>
+		$(function (){
+			var paper = Raphael($('#my-svg')[0], 600, 400);
+			var rect = paper.rect(0, 0, 600, 400);
+			var circle = paper.circle(300, 200, 120);
+			var triangle = paper.path('M300, 50 L100, 350 L500,350 Z');
+
+			/*rect.attr('fill', '#fff');
+			circle.attr('fill', '#f00');
+			circle.attr('stroke-width', 0);*/
+			triangle.attr({
+				gradient: '90-#444-#EEE',
+				stroke: 'green',
+				'stroke-width': 20,
+				'stroke-linejoin': 'round'
+			});
+			circle.attr({
+				'stroke-width': 15,
+				'stroke-dasharry': '-..'
+			});
+			triangle.animate({
+				transform: 'r 360 s 0.2'
+			}, 3000, '<>', function (){
+				triangle.animate({
+					transform: 'r 0 s 1'
+				}, 3000, '<>');
+			});
+		});
+	</script>
+</body>
+</html>

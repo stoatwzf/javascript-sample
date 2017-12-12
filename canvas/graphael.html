@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>gRaphael</title>
+	<!-- <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script> -->
+	<script src="https://cdn.bootcss.com/raphael/2.2.7/raphael.min.js"></script>
+	<script src="https://cdn.bootcss.com/graphael/0.5.1/g.raphael-min.js"></script>
+	<script src="https://cdn.bootcss.com/graphael/0.5.1/g.pie-min.js"></script>
+	<script src="https://cdn.bootcss.com/graphael/0.5.1/g.bar-min.js"></script>
+	<script src="https://cdn.bootcss.com/graphael/0.5.1/g.line-min.js"></script>
+</head>
+<body>
+	<div id="svg"></div>
+	<script>
+		Raphael.fn.labelBarChart = function (opt){
+			var paper = this;
+
+			opt.x_start += 10;
+			opt.width -= 20;
+
+			var labelWidth = opt.width / opt.labels.length;
+
+			opt.x_start += labelWidth / 2;
+			for (var i = 0, len = opt.labels.length; i < len; i += 1){
+				paper.text(opt.x_start + (i * labelWidth), opt.y_start, opt.labels[i]).attr(opt.textAttr);
+			}
+		}
+		window.onload = function (){
+			var paper = Raphael(document.getElementById('svg'), 800, 600);
+
+			/*paper.piechart(300, 200, 150, [65, 40, 13, 32, 5, 1, 2], {
+				legend: ['Donkeys', '%%.%%-Monkeys', 'Llamas', 'Giraffes', 'Rhions', 'Gorillas', 'Gorillas']
+			});*/
+
+			/*var data1 = [63, 79, 22, 12, 122, 100];
+			var data2 = [22, 29, 24, 45, 122, 12];
+			var data3 = [14, 79, 22, 12, 32, 100];
+			var labels = ['Col 1', 'Col 2', 'Col 3', 'Col 4', 'Col 5', 'Col 6'];
+
+			paper.barchart(0, 0, 600, 400, [data1, data2, data3], {stacked: false});
+			paper.labelBarChart({
+				x_start: 0,
+				y_start: 390,
+				width: 600,
+				labels: labels,
+				textAttr: {
+					'font-size': 14
+				}
+			});*/
+
+			var xVals = [0, 5, 10, 15, 20, 25, 30, 22, 50, 12],
+				yVals = [44, 22, 1, 2, 33, 14, 56, 55, 34, 2];
+
+			paper.linechart(0, 0, 600, 380, xVals, [xVals], {axis: '0 0 1 1'});
+		};
+	</script>
+</body>
+</html>

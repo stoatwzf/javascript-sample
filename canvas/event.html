@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>event</title>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<canvas id="my-canvas" width="200" height150=""></canvas>
+	<script>
+		window.onload = function (){
+			var canvas = document.getElementById('my-canvas');
+
+			if (canvas.getContext){
+				var ctx = canvas.getContext('2d');
+
+				ctx.fillRect(10, 15, 80, 50);
+				$('#my-canvas').click(function (e){
+					var offsetX = e.pageX - this.offsetLeft;
+					var offsetY = e.pageY - this.offsetTop;
+
+					if ((offsetX > 10 && offsetX < 90) && (offsetY > 15 && offsetY < 65)){
+						console.log('Rectangle clicked');
+					}
+				});
+			}
+		}
+	</script>
+</body>
+</html>

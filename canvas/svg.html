@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>svg</title>
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+	<svg height="200" xmlns="http://www.we.org/2000/svg">
+		<rect width="150" height="100" fill="blue" />
+		<circle r="50" cx="50" cy="50" fill="red" />
+		<polygon points="0, 0, 50, 50, 100, 0" fill="orange" />
+	</svg>
+	<script>
+		$(function (){
+			var circle = $('svg circle'),
+				radius = 50;
+				svgInterval = setInterval(function (){
+					radius += .2;
+					if (radius > 70){
+						clearInterval(svgInterval);
+						return;
+					}
+					circle.attr('r', radius);
+				}, 1000 / 60);
+
+			circle.click(function (){
+				console.log('Circle clicked.');
+			});
+		});
+	</script>
+</body>
+</html>
